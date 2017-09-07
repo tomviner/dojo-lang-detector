@@ -1,4 +1,7 @@
 #! /usr/bin/env python
+# This works temporarily, and then google gets grumpy,..
+# ...
+# ...yes, really. Textblob backs onto google translate for language detection.
 import json
 import random
 import sys
