@@ -1,3 +1,4 @@
+import sys
 from grade import get_languages
 import json
 
@@ -51,7 +52,7 @@ def find_lang(test_text, model):
     return min(ds, key=lambda lang_d: lang_d[1])[0]
 
 def lang_me(test_fn, model):
-    languages = get_languages()
+    # languages = get_languages()
     for line in open(test_fn):
         data = json.loads(line)
         ex_num = data['example']
@@ -61,9 +62,21 @@ def lang_me(test_fn, model):
         # print(ex_num, lang, lang_name, repr(text))
         # print()
         # print()
-        print(json.dumps({'example': ex_num, 'lang': lang}))
+        yield json.dumps({'example': ex_num, 'lang': lang})
 
 
-train_data_fn = '../train_100.json'
-model = make_model(train_data_fn)
-lang_me('../test_100.json', model)
+def main():
+    """
+    python team_window/label_articles.py train_100.json test_100.json
+    python team_window/label_articles.py train_200.json test_200.json
+    """
+
+    train_data_fn, test_data_fn = sys.argv[1:]
+
+    model = make_model(train_data_fn)
+    for answer in lang_me(test_data_fn, model):
+        print(answer)
+
+
+if __name__ == '__main__':
+    main()
