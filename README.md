@@ -19,7 +19,7 @@ Then the grading.py script is going to be used to get the official dojo score.
 
 ## lang_train.json
 
-Label training dataset as a jsonl file containing objects with the
+Label training dataset as a jsonl ([JSON Lines](http://jsonlines.org/)) file containing objects with the
 following schema:
 
 1. text  
