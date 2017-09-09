@@ -48,18 +48,23 @@ def grade(reference_answer_file, team_answer_file, test_file):
     print("Incorrect answers: {}!".format(len(incorrect_answers)))
     print("Blank answers: {}!".format(len(blank_answers)))
 
-    print("Examples of correct answers from team:")
-    for answer, correct_answer, text in random.sample(correct_answers, 5):
-        print("({}) {}".format(languages[answer], text))
-        print()
-
-    print("Examples of incorrect answers from team:")
-    for answer, correct_answer, text in random.sample(incorrect_answers, 5):
-        try:
-            print("(team answer: {}, correct answer: {}) {}".format(languages[answer], languages[correct_answer], text))
+    if correct_answers:
+        print("Examples of correct answers from team:")
+        samples = random.sample(correct_answers, min(5, len(correct_answer)))
+        for answer, correct_answer, text in samples:
+            print("({}) {}".format(languages[answer], text))
             print()
-        except KeyError:
-            print("team answer: {} is not a recognised language code".format(answer))
+
+    if incorrect_answers:
+        print("Examples of incorrect answers from team:")
+        samples = random.sample(correct_answers, min(5, len(incorrect_answers)))
+        for answer, correct_answer, text in random.sample(incorrect_answers, 5):
+            try:
+                print("(team answer: {}, correct answer: {}) {}".format(
+                    languages[answer], languages[correct_answer], text))
+                print()
+            except KeyError:
+                print("team answer: {} is not a recognised language code".format(answer))
 
 
 if __name__ == "__main__":
@@ -76,4 +81,3 @@ if __name__ == "__main__":
         args.team_answer_file,
         args.test_file,
     )
-
